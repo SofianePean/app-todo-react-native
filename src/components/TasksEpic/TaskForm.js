@@ -1,10 +1,17 @@
 import React, {useState} from 'react';
 import { View, TextInput, StyleSheet, Button } from 'react-native';
 
-const TaskForm = ({}) => {
-    const [title, setTitle] = useState("")
+const TaskForm = ({onAddTask}) => {
+    const [title, setTitle] = useState("");
+
     const onChangeText = value => {setTitle(value)}
-    const onPressButton = () => {}
+
+    const onPressButton = () => {
+        if (title.length > 0) {
+            onAddTask(title);
+            setTitle('');
+        }
+    }
     return(
         <View style={style.container}>
             <View style={style.containerInput}>
