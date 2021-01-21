@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
-import ContainerCounter from './ContainerCounter'
+import ContainerCounter from './ContainerCounter';
+import FloatingButton from '../_Shared/FloatingButton'
 
 
 function TasksContainer() {
     const [tasks, setTasks] = useState([
         {id: new Date().getTime(), title: "Nouvelle tache", completed: false}
     ]);
-    const [nbTasksCompleted, setnbTasksCompleted] = useState([])
+    const [nbTasksCompleted, setnbTasksCompleted] = useState([]);
+    const [isFormOpened, setisFormOpened] = useState(false)
 
     const onAddTask = (title) => {
         const newTask = {id:new Date().getTime(), title: title, completed: false}
@@ -51,13 +53,26 @@ function TasksContainer() {
         return nb
     }
 
+    const toggleForm = () => {
+        setisFormOpened(!isFormOpened)
+    }
+
     return(
-        <View>
-            <TaskForm onAddTask={onAddTask}/>
+        <View style={styles.container}>
+            { isFormOpened && <TaskForm onAddTask={onAddTask}/>}
             <ContainerCounter nbTasksCompleted={countStatusCompleted} nbTasks={tasks}/>
             <TaskList tasks={tasks} onChangeStatus={onChangeStatus} onDeleteTask={onDeleteTask}/>
+            <FloatingButton toggleForm={toggleForm} isFormOpened={isFormOpened}/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        // backgroundColor: 'red',
+        flex:1,
+        position: 'relative',
+    }
+})
 
 export default TasksContainer;

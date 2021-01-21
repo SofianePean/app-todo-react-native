@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 import { StyleSheet, SafeAreaView, Text, View, Platform } from 'react-native';
 import Header from './src/components/_Shared/Header';
 import TasksContainer from './src/components/TasksEpic/TasksContainer';
@@ -7,10 +9,12 @@ import TasksContainer from './src/components/TasksEpic/TasksContainer';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      <TasksContainer />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <Header />
+        <TasksContainer />
+      </SafeAreaView>
+    </Provider>
   );
 }
 
